@@ -56,11 +56,22 @@
     }
 
     .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       font-size: 18px;
       font-weight: 600;
       letter-spacing: 0.5px;
       text-decoration: none;
       color: var(--text-dark);
+    }
+
+    .nav-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;          /* 圆角正方形 */
+      object-fit: cover;            /* 保持比例裁剪 */
+      display: block;
     }
 
     .nav-links {
@@ -276,9 +287,12 @@
   <!-- 顶部导航：想改菜单文字就改这里 -->
   <nav class="nav">
     <div class="nav-inner">
-      <a class="nav-logo" href="#">Lin</a>
+      <a class="nav-logo" href="#">
+      <img class="nav-avatar" src="avatar.jpg" alt="Lin">
+      <span>Lin</span>
+    </a>
       <ul class="nav-links">
-        <li><a href="#about">关于</a></li>
+        <li><a href="about.html">关于</a></li>
         <li><a href="#works">作品</a></li>
         <li><a href="#contact">联系</a></li>
       </ul>
@@ -290,13 +304,13 @@
     <div class="greeting">你好，欢迎来到我的主页</div>
     <h1>我是<span class="light"> Lin</span></h1>
     <p>一个热爱生活与创造的人。这里记录我的想法、作品与成长。</p>
-    <a class="btn btn-blue" href="#about">了解更多</a>
+    <a class="btn btn-blue" href="about.html">了解更多</a>
     <a class="btn btn-ghost" href="#works">看看作品</a>
   </header>
 
   <!-- 关于 -->
   <section id="about">
-    <h2 class="section-title">关于我</h2>
+    <h2 class="section-title"><a href="about.html" style="color:inherit;text-decoration:none">关于我 →</a></h2>
     <p class="section-sub">简单、专注，把每一件小事做到极致。</p>
     <div class="cards">
       <div class="card">
@@ -333,7 +347,8 @@
     <h2 class="section-title">联系我</h2>
     <p class="section-sub">想认识我，或者有什么想聊的？欢迎随时联系。</p>
     <div class="feature">
-      <p>✉️ 邮箱：<a class="feature-link" href="mailto:2239391435@qq.com">2239391435@qq.com</a></p>
+      <p>🐧 QQ号：2239391435</p>
+      <p>💬 微信号：handsome6i6</p>
     </div>
   </section>
 

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于 Lin · 个人主页</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --blue: #0071e3;
+      --text-dark: #1d1d1f;
+      --text-gray: #6e6e73;
+      --bg-light: #f5f5f7;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+        "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    /* ===== 顶部导航 ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      color: var(--text-dark);
+    }
+
+    .nav-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text-dark); }
+
+    .nav-links a.active {
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    /* ===== 个人信息卡片（头像在右） ===== */
+    .profile {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 80px 20px 60px;
+      display: grid;
+      grid-template-columns: 1fr 220px;   /* 信息在左，头像在右 */
+      gap: 60px;
+      align-items: center;
+    }
+
+    .profile-avatar {
+      width: 220px;
+      height: 220px;
+      border-radius: 28px;
+      object-fit: cover;
+      display: block;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+    }
+
+    .profile-info h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .profile-info .tagline {
+      font-size: 17px;
+      color: var(--text-gray);
+      margin-bottom: 28px;
+    }
+
+    .info-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 32px;
+    }
+
+    .info-list li {
+      font-size: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .info-list .label {
+      font-size: 12px;
+      color: var(--text-gray);
+      letter-spacing: 1px;
+    }
+
+    .info-list .value {
+      font-size: 16px;
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    /* ===== 区块标题 ===== */
+    .section-head {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 20px 50px;
+      text-align: center;
+    }
+
+    .section-head h2 {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .section-head p {
+      font-size: 17px;
+      color: var(--text-gray);
+    }
+
+    /* ===== 理念卡（稍大圆角正方形） ===== */
+    .beliefs {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .belief {
+      background: var(--bg-light);
+      border-radius: 32px;
+      padding: 48px 40px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .belief:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.08);
+    }
+
+    .belief .index {
+      font-size: 13px;
+      color: var(--blue);
+      font-weight: 600;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .belief h3 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .belief p {
+      font-size: 15px;
+      color: var(--text-gray);
+      line-height: 1.75;
+    }
+
+    .belief .formula {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 6px 14px;
+      background: #fff;
+      border-radius: 980px;
+      font-size: 13px;
+      color: var(--text-dark);
+      font-family: "SF Mono", "Menlo", monospace;
+    }
+
+    .belief .chart {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin-top: 24px;
+    }
+
+    .belief .chart-caption {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text-gray);
+      text-align: center;
+    }
+
+    /* ===== 返回按钮 ===== */
+    .back {
+      text-align: center;
+      padding: 20px 20px 100px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 32px;
+      border-radius: 980px;
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-blue {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .btn-blue:hover {
+      background: #0077ed;
+      transform: scale(1.03);
+    }
+
+    /* ===== 页脚 ===== */
+    footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 50px 20px 60px;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 12px;
+      color: var(--text-gray);
+      line-height: 1.8;
+    }
+
+    footer .brand {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 768px) {
+      .nav-links { gap: 16px; }
+      .profile {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 50px 20px 40px;
+        text-align: center;
+        justify-items: center;
+      }
+      .profile-avatar { width: 160px; height: 160px; border-radius: 22px; order: -1; }
+      .info-list { grid-template-columns: 1fr; gap: 12px; text-align: left; }
+      .beliefs { grid-template-columns: 1fr; padding: 0 20px 60px; }
+      .belief { padding: 36px 28px; border-radius: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 顶部导航 -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <img class="nav-avatar" src="avatar.jpg" alt="Lin">
+        <span>Lin</span>
+      </a>
+      <ul class="nav-links">
+        <li><a class="active" href="about.html">关于</a></li>
+        <li><a href="index.html#works">作品</a></li>
+        <li><a href="index.html#contact">联系</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 个人信息卡片（头像在右） -->
+  <section class="profile">
+    <div class="profile-info">
+      <h1>Lin</h1>
+      <p class="tagline">一个热爱生活与创造的人</p>
+      <ul class="info-list">
+        <li>
+          <span class="label">性别</span>
+          <span class="value">男</span>
+        </li>
+        <li>
+          <span class="label">出生日期</span>
+          <span class="value">2007 年 1 月 6 日</span>
+        </li>
+        <li>
+          <span class="label">就读于</span>
+          <span class="value">临沂大学</span>
+        </li>
+        <li>
+          <span class="label">MBTI</span>
+          <span class="value">INFJ</span>
+        </li>
+        <li>
+          <span class="label">联系方式</span>
+          <span class="value">QQ 2239391435</span>
+        </li>
+      </ul>
+    </div>
+    <img class="profile-avatar" src="avatar.jpg" alt="Lin">
+  </section>
+
+  <!-- 理念区 -->
+  <div class="section-head">
+    <h2>我信奉的理念</h2>
+    <p>简单几条，指引我向前。</p>
+  </div>
+
+  <div class="beliefs">
+    <!-- 理念 1：复利 -->
+    <div class="belief">
+      <h3>复利</h3>
+      <p>复利，俗称"利滚利"。每一期的收益都并入本金，下一期的收益在更大的本金上再次增长。前期不显，后期呈指数级爆发——时间越长，曲线越陡。</p>
+      <span class="formula">A = P × (1 + r)<sup>n</sup></span>
+
+      <!-- 微笑曲线 SVG -->
+      <svg class="chart" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="smileFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0071e3" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#0071e3" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <!-- 坐标轴 -->
+        <line x1="30" y1="20" x2="30" y2="170" stroke="#d2d2d7" stroke-width="1"/>
+        <line x1="30" y1="170" x2="380" y2="170" stroke="#d2d2d7" stroke-width="1"/>
+
+        <!-- 起点辅助线（成本线） -->
+        <line x1="30" y1="50" x2="380" y2="50" stroke="#e5e5ea" stroke-width="1" stroke-dasharray="4 4"/>
+
+        <!-- 面积填充 -->
+        <path d="M 30 50 Q 200 200 370 30 L 370 170 L 30 170 Z" fill="url(#smileFill)"/>
+
+        <!-- 微笑曲线 -->
+        <path d="M 30 50 Q 200 200 370 30" fill="none" stroke="#0071e3" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- 起点标记 -->
+        <circle cx="30" cy="50" r="5" fill="#0071e3"/>
+        <text x="40" y="42" font-size="11" fill="#6e6e73">起点 · 本金</text>
+
+        <!-- 低点标记 -->
+        <circle cx="200" cy="115" r="5" fill="#86868b"/>
+        <text x="120" y="135" font-size="11" fill="#6e6e73">低位坚持 · 定投摊薄成本</text>
+
+        <!-- 终点标记 -->
+        <circle cx="370" cy="30" r="5" fill="#0071e3"/>
+        <text x="270" y="22" font-size="11" fill="#6e6e73">复利爆发 · 指数增长</text>
+
+        <!-- X 轴标签 -->
+        <text x="195" y="190" font-size="11" fill="#86868b" text-anchor="middle">时间 →</text>
+      </svg>
+
+      <p class="chart-caption">微笑曲线：先抑后扬，长期坚持才能看见复利的力量。</p>
+    </div>
+  </div>
+
+  <!-- 返回主页 -->
+  <div class="back">
+    <a class="btn btn-blue" href="index.html">← 返回主页</a>
+  </div>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="brand">Lin</div>
+    <p>© 2026 Lin · 保留所有权利</p>
+    <p>Powered by GitHub Pages</p>
+  </footer>
+
+</body>
+</html>
