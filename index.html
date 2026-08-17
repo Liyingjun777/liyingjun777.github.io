@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lin · 个人主页</title>
+  <meta name="description" content="独立思考　明辨是非">
+  <meta property="og:title" content="Lin · 个人主页">
+  <meta property="og:description" content="独立思考　明辨是非">
+  <meta property="og:image" content="https://lin.loc.cc/avatar.jpg">
+  <meta property="og:url" content="https://lin.loc.cc">
+  <meta property="og:type" content="website">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <style>
@@ -293,6 +299,109 @@
       text-decoration: underline;
     }
 
+    /* ===== 基金持仓分布（抖音风格环形图） ===== */
+    .holdings {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 16px 0 8px;
+    }
+
+    .donut {
+      position: relative;
+      width: 190px;
+      height: 190px;
+      flex-shrink: 0;
+    }
+
+    .donut svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .donut-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .donut-pct {
+      font-size: 40px;
+      font-weight: 700;
+      color: #fa2d48;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .donut-pct span {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .donut-label {
+      margin-top: 6px;
+      font-size: 13px;
+      color: #86868b;
+    }
+
+    .legend {
+      list-style: none;
+      min-width: 240px;
+    }
+
+    .legend li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: #f5f5f7;
+      border-radius: 16px;
+    }
+
+    .legend .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-info {
+      flex: 1;
+    }
+
+    .legend-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1d1d1f;
+    }
+
+    .legend-code {
+      font-size: 13px;
+      color: #86868b;
+      margin-top: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .legend-pct {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fa2d48;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .holdings-note {
+      margin-top: 18px;
+      font-size: 12px;
+      color: #a1a1a6;
+      text-align: center;
+    }
+
     /* ===== 页脚 ===== */
     footer {
       border-top: 1px solid rgba(0, 0, 0, 0.08);
@@ -380,9 +489,37 @@
     <h2 class="section-title">我的作品</h2>
     <p class="section-sub">最近在做的一些事情。</p>
     <div class="feature">
-      <h3>我的第一个网站</h3>
-      <p>用 GitHub Pages 搭建的个人主页，全程免费，0 服务器成本。</p>
-      <a class="feature-link" href="https://github.com/liyingjun777" target="_blank">查看我的 GitHub ›</a>
+      <h3>我的基金持仓分布</h3>
+      <div class="holdings">
+        <div class="donut">
+          <svg viewBox="0 0 200 200">
+            <defs>
+              <linearGradient id="gradA500" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff7a59"/>
+                <stop offset="100%" stop-color="#fa2d48"/>
+              </linearGradient>
+            </defs>
+            <circle cx="100" cy="100" r="80" fill="none" stroke="#f5f5f7" stroke-width="26"/>
+            <circle cx="100" cy="100" r="80" fill="none" stroke="url(#gradA500)" stroke-width="26"
+                    stroke-dasharray="502.65 0" transform="rotate(-90 100 100)"/>
+          </svg>
+          <div class="donut-center">
+            <div class="donut-pct">100<span>%</span></div>
+            <div class="donut-label">单一持仓</div>
+          </div>
+        </div>
+        <ul class="legend">
+          <li>
+            <span class="dot" style="background: linear-gradient(135deg, #ff7a59, #fa2d48);"></span>
+            <div class="legend-info">
+              <div class="legend-name">中证A500</div>
+              <div class="legend-code">000510</div>
+            </div>
+            <div class="legend-pct">100%</div>
+          </li>
+        </ul>
+      </div>
+      <p class="holdings-note">* 持仓仅为个人投资记录，不构成任何投资建议。</p>
     </div>
   </section>
 
