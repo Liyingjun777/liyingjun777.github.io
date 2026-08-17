@@ -148,8 +148,20 @@
     .section-head {
       max-width: 980px;
       margin: 0 auto;
-      padding: 0 20px 50px;
+      padding: 70px 20px 50px;
       text-align: center;
+      position: relative;
+    }
+
+    .section-head::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 56px;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.12);
     }
 
     .section-head h2 {
@@ -230,6 +242,16 @@
       font-size: 13px;
       color: var(--text-gray);
       text-align: center;
+    }
+
+    .belief-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 20px;
+      margin-top: 24px;
+      display: block;
     }
 
     /* ===== 返回按钮 ===== */
@@ -315,7 +337,7 @@
   <section class="profile">
     <div class="profile-info">
       <h1>Lin</h1>
-      <p class="tagline">一个热爱生活与创造的人</p>
+      <p class="tagline">独立思考　明辨是非</p>
       <ul class="info-list">
         <li>
           <span class="label">性别</span>
@@ -394,6 +416,13 @@
       </svg>
 
       <p class="chart-caption">微笑曲线：先抑后扬，长期坚持才能看见复利的力量。</p>
+    </div>
+
+    <!-- 理念 2：健身 -->
+    <div class="belief">
+      <h3>健身</h3>
+      <p>一副好的身体，是你享受世界的前提。</p>
+      <img class="belief-img" src="fitness.jpg" alt="健身">
     </div>
   </div>
 
