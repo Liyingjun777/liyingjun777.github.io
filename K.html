@@ -147,6 +147,61 @@
       border-radius: 20px;
       display: block;
       border: 1px solid rgba(0, 0, 0, 0.06);
+      cursor: zoom-in;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .learn-card img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .image-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .image-modal.show {
+      display: flex;
+    }
+
+    .image-modal img {
+      max-width: min(1100px, 94vw);
+      max-height: 86vh;
+      object-fit: contain;
+      border-radius: 22px;
+      background: #fff;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+      cursor: zoom-out;
+    }
+
+    .modal-close {
+      position: fixed;
+      top: 22px;
+      right: 24px;
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+      font-size: 28px;
+      line-height: 42px;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.28);
+      transform: scale(1.05);
     }
 
     .back {
@@ -222,20 +277,25 @@
       <div class="learn-card">
         <h3>锤子线 & 上吊线</h3>
         <p>长下影线、小实体的反转形态。下跌末端为锤子线，看涨；上涨末端为上吊线，看跌。</p>
-        <img src="k-line-hammer.jpg" alt="锤子线与上吊线">
+        <img src="k-line-hammer.jpg" alt="锤子线与上吊线" class="zoomable" data-title="锤子线与上吊线">
       </div>
       <div class="learn-card">
         <h3>射击之星 & 倒锤头</h3>
         <p>长上影线、小实体的反转形态。高位出现为射击之星，看跌；低位出现为倒锤头，看涨。</p>
-        <img src="k-line-shooting.jpg" alt="射击之星与倒锤头">
+        <img src="k-line-shooting.jpg" alt="射击之星与倒锤头" class="zoomable" data-title="射击之星与倒锤头">
       </div>
       <div class="learn-card">
         <h3>一字线 & T字线</h3>
         <p>极端价格形态。一字线表示多空力量极度一致；T字线显示开盘后一度被打压但最终收复。</p>
-        <img src="k-line-t.jpg" alt="一字线与T字线">
+        <img src="k-line-t.jpg" alt="一字线与T字线" class="zoomable" data-title="一字线与T字线">
       </div>
     </div>
   </section>
+
+  <div class="image-modal" id="imageModal" aria-hidden="true">
+    <button class="modal-close" type="button" aria-label="关闭放大图片">×</button>
+    <img id="modalImage" src="" alt="">
+  </div>
 
   <div class="back">
     <a class="btn" href="index.html">← 返回主页</a>
@@ -246,5 +306,44 @@
     <p>© 2026 Lin · 保留所有权利</p>
     <p>Powered by GitHub Pages</p>
   </footer>
+
+  <script>
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+    const closeButton = modal.querySelector(".modal-close");
+
+    function openImageModal(image) {
+      modalImage.src = image.src;
+      modalImage.alt = image.dataset.title || image.alt || "放大图片";
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeImageModal() {
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden", "true");
+      modalImage.src = "";
+      document.body.style.overflow = "";
+    }
+
+    document.querySelectorAll(".zoomable").forEach((image) => {
+      image.addEventListener("click", () => openImageModal(image));
+    });
+
+    closeButton.addEventListener("click", closeImageModal);
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal || event.target === modalImage) {
+        closeImageModal();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && modal.classList.contains("show")) {
+        closeImageModal();
+      }
+    });
+  </script>
 </body>
 </html>
