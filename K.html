@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K线形态 · Lin</title>
+  <meta name="description" content="技术分析 · K线形态">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --blue: #0071e3;
+      --text-dark: #1d1d1f;
+      --text-gray: #6e6e73;
+      --bg-light: #f5f5f7;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+        "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      color: var(--text-dark);
+    }
+
+    .nav-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .hero {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 90px 20px 55px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 7vw, 64px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-gray);
+    }
+
+    .learning {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 20px 90px;
+    }
+
+    .learning-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .learn-card {
+      background: var(--bg-light);
+      border-radius: 32px;
+      padding: 32px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .learn-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.08);
+    }
+
+    .learn-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .learn-card p {
+      font-size: 14px;
+      color: var(--text-gray);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .learn-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      display: block;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .back {
+      text-align: center;
+      padding: 0 20px 90px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 32px;
+      border-radius: 980px;
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .btn:hover {
+      background: #0077ed;
+      transform: scale(1.03);
+    }
+
+    footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 50px 20px 60px;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 12px;
+      color: var(--text-gray);
+      line-height: 1.8;
+    }
+
+    footer .brand {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { gap: 16px; }
+      .learning-grid { grid-template-columns: 1fr; }
+      .learn-card { padding: 28px; border-radius: 24px; }
+      .hero { padding: 64px 20px 42px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <img class="nav-avatar" src="avatar.jpg" alt="Lin">
+        <span>Lin</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="about.html">关于</a></li>
+        <li><a class="active" href="K.html">K线</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1>K线形态</h1>
+    <p>技术分析 · 正在学习</p>
+  </header>
+
+  <section class="learning">
+    <div class="learning-grid">
+      <div class="learn-card">
+        <h3>锤子线 & 上吊线</h3>
+        <p>长下影线、小实体的反转形态。下跌末端为锤子线，看涨；上涨末端为上吊线，看跌。</p>
+        <img src="k-line-hammer.jpg" alt="锤子线与上吊线">
+      </div>
+      <div class="learn-card">
+        <h3>射击之星 & 倒锤头</h3>
+        <p>长上影线、小实体的反转形态。高位出现为射击之星，看跌；低位出现为倒锤头，看涨。</p>
+        <img src="k-line-shooting.jpg" alt="射击之星与倒锤头">
+      </div>
+      <div class="learn-card">
+        <h3>一字线 & T字线</h3>
+        <p>极端价格形态。一字线表示多空力量极度一致；T字线显示开盘后一度被打压但最终收复。</p>
+        <img src="k-line-t.jpg" alt="一字线与T字线">
+      </div>
+    </div>
+  </section>
+
+  <div class="back">
+    <a class="btn" href="index.html">← 返回主页</a>
+  </div>
+
+  <footer>
+    <div class="brand">Lin</div>
+    <p>© 2026 Lin · 保留所有权利</p>
+    <p>Powered by GitHub Pages</p>
+  </footer>
+</body>
+</html>
