@@ -223,6 +223,42 @@
       margin-bottom: 60px;
     }
 
+    /* ===== 我的对象（空缺占位） ===== */
+    .partner-empty {
+      max-width: 620px;
+      margin: 0 auto 24px;
+    }
+
+    .partner-img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #e3e3e8 0%, #c8c8d2 50%, #bcbbc6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+    }
+
+    .partner-text {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      line-height: 1.9;
+      color: #6e6e73;
+      opacity: 0.85;
+    }
+
+    .partner-text small {
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+      color: #86868b;
+    }
+
     /* ===== 三张卡片 ===== */
     .cards {
       display: grid;
@@ -762,6 +798,20 @@
           <li><span class="rank-no">5</span><div class="rank-song"><div class="song">推开世界的门</div><div class="singer">杨乃文</div></div><span class="rank-count">135 次</span></li>
         </ul>
         <a class="music-link" href="https://activity.kugou.com/share/v-c7b4da67/index.html?id=1f0f5ee9f0fa4833f30611ae388f241c" target="_blank">查看我的酷狗主页 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 我的对象 -->
+  <section id="partner">
+    <h2 class="section-title">我的对象</h2>
+    <p class="section-sub">这里本该有一段故事。</p>
+    <div class="partner-empty">
+      <div class="partner-img" role="img" aria-label="暂时空缺">
+        <div class="partner-text">
+          暂时空缺
+          <small>有意者联系管理员添加</small>
+        </div>
       </div>
     </div>
   </section>
