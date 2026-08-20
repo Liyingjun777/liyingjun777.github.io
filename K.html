@@ -16,6 +16,8 @@
       --text-gray: #6e6e73;
       --bg-light: #f5f5f7;
       --white: #ffffff;
+      --up: #e03131;      /* 阳线红 */
+      --down: #2f9e44;    /* 阴线绿 */
     }
 
     body {
@@ -141,21 +143,54 @@
       margin-bottom: 20px;
     }
 
-    .learn-card img {
+    .learn-card svg.chart {
       width: 100%;
       height: auto;
       border-radius: 20px;
       display: block;
+      background: #fff;
       border: 1px solid rgba(0, 0, 0, 0.06);
       cursor: zoom-in;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .learn-card img:hover {
+    .learn-card svg.chart:hover {
       transform: scale(1.02);
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
     }
 
+    .learn-card .caption {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--text-gray);
+      text-align: center;
+      cursor: zoom-in;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(22px, 3.5vw, 30px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 28px;
+      color: var(--text-dark);
+    }
+
+    .section-title.later { margin-top: 64px; }
+
+    .learn-card .badge {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 4px 14px;
+      border-radius: 980px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      background: rgba(0, 113, 227, 0.10);
+      color: var(--blue);
+    }
+
+    /* ===== 放大弹窗 ===== */
     .image-modal {
       position: fixed;
       inset: 0;
@@ -173,14 +208,31 @@
       display: flex;
     }
 
-    .image-modal img {
+    .image-modal .modal-body {
+      position: relative;
       max-width: min(1100px, 94vw);
       max-height: 86vh;
-      object-fit: contain;
       border-radius: 22px;
       background: #fff;
       box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
       cursor: zoom-out;
+      overflow: auto;
+    }
+
+    .image-modal .modal-body svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 22px;
+    }
+
+    .image-modal .modal-title {
+      padding: 14px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-dark);
+      text-align: center;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
     }
 
     .modal-close {
@@ -197,6 +249,7 @@
       line-height: 42px;
       cursor: pointer;
       transition: background 0.2s ease, transform 0.2s ease;
+      z-index: 1000;
     }
 
     .modal-close:hover {
@@ -273,28 +326,379 @@
   </header>
 
   <section class="learning">
+    <h2 class="section-title">单根K线 · 反转信号</h2>
     <div class="learning-grid">
+
+      <!-- 卡片 1：锤子线 & 上吊线 -->
       <div class="learn-card">
         <h3>锤子线 & 上吊线</h3>
         <p>长下影线、小实体的反转形态。下跌末端为锤子线，看涨；上涨末端为上吊线，看跌。</p>
-        <img src="k-line-hammer.jpg" alt="锤子线与上吊线" class="zoomable" data-title="锤子线与上吊线">
+        <svg class="chart" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" data-title="锤子线 &amp; 上吊线" role="img" aria-label="锤子线与上吊线示意图">
+          <defs>
+            <marker id="arr-hammer" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="#86868b"/>
+            </marker>
+          </defs>
+          <!-- 背景 -->
+          <rect x="0" y="0" width="480" height="300" fill="#ffffff"/>
+          <!-- 标题 -->
+          <text x="240" y="36" font-size="17" font-weight="600" fill="#1d1d1f" text-anchor="middle">锤子线（下跌末端 · 看涨）</text>
+
+          <!-- ===== 左侧：K线形态 ===== -->
+          <!-- 锤子线：长下影 + 小实体，位于高点附近 -->
+          <!-- 影线上端 -->
+          <line x1="120" y1="80"  x2="120" y2="110" stroke="#e03131" stroke-width="4"/>
+          <!-- 实体（阳线） -->
+          <rect x="102" y="110" width="36" height="30" fill="#e03131" rx="3"/>
+          <!-- 长下影线 -->
+          <line x1="120" y1="140" x2="120" y2="250" stroke="#e03131" stroke-width="4"/>
+
+          <!-- 辅助虚线：锤头线特征（下影极长） -->
+          <line x1="120" y1="250" x2="230" y2="250" stroke="#c7c7cc" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <text x="238" y="254" font-size="11" fill="#86868b">长下影线 ≥ 实体 2 倍</text>
+
+          <!-- 标签：小实体 -->
+          <line x1="102" y1="118" x2="62"  y2="118" stroke="#c7c7cc" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <text x="56" y="122" font-size="12" fill="#86868b" text-anchor="end">小实体</text>
+
+          <!-- 标签：锤头 -->
+          <line x1="120" y1="64" x2="120" y2="52" stroke="#c7c7cc" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <text x="120" y="46" font-size="12" fill="#e03131" text-anchor="middle" font-weight="600">锤头</text>
+
+          <!-- 底部：下跌趋势箭头 -->
+          <path d="M 88 272 Q 120 268 152 272" fill="none" stroke="#86868b" stroke-width="1.5" marker-end="url(#arr-hammer)"/>
+          <text x="120" y="288" font-size="12" fill="#86868b" text-anchor="middle">下跌末端出现 → 看涨信号</text>
+
+          <!-- ===== 分隔虚线 ===== -->
+          <line x1="240" y1="60" x2="240" y2="270" stroke="#e5e5ea" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+          <!-- ===== 右侧：上吊线 ===== -->
+          <text x="360" y="36" font-size="17" font-weight="600" fill="#1d1d1f" text-anchor="middle">上吊线（上涨末端 · 看跌）</text>
+
+          <!-- 上吊线：长下影 + 小实体，位于高位 -->
+          <line x1="360" y1="70"  x2="360" y2="95"  stroke="#2f9e44" stroke-width="4"/>
+          <rect x="342" y="95" width="36" height="28" fill="#2f9e44" rx="3"/>
+          <line x1="360" y1="123" x2="360" y2="225" stroke="#2f9e44" stroke-width="4"/>
+
+          <!-- 高位水平线 -->
+          <line x1="360" y1="62" x2="465" y2="62" stroke="#c7c7cc" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <text x="240" y="58" font-size="11" fill="#86868b" text-anchor="end">高位（上涨末端）</text>
+
+          <!-- 长下影标注 -->
+          <line x1="360" y1="225" x2="430" y2="225" stroke="#c7c7cc" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <text x="438" y="229" font-size="11" fill="#86868b">长下影线</text>
+
+          <!-- 上涨趋势箭头 -->
+          <path d="M 328 250 Q 360 246 392 250" fill="none" stroke="#86868b" stroke-width="1.5" marker-end="url(#arr-hammer)"/>
+          <text x="360" y="272" font-size="12" fill="#86868b" text-anchor="middle">上涨末端出现 → 看跌信号</text>
+        </svg>
+        <p class="caption">点击放大 · 锤子线与上吊线</p>
       </div>
+
+      <!-- 卡片 2：射击之星 & 倒锤头 -->
       <div class="learn-card">
         <h3>射击之星 & 倒锤头</h3>
         <p>长上影线、小实体的反转形态。高位出现为射击之星，看跌；低位出现为倒锤头，看涨。</p>
-        <img src="k-line-shooting.jpg" alt="射击之星与倒锤头" class="zoomable" data-title="射击之星与倒锤头">
+        <svg class="chart" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" data-title="射击之星 &amp; 倒锤头" role="img" aria-label="射击之星与倒锤头示意图">
+          <defs>
+            <marker id="arr-shoot" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="#86868b"/>
+            </marker>
+          </defs>
+          <rect x="0" y="0" width="480" height="300" fill="#ffffff"/>
+          <text x="120" y="36" font-size="17" font-weight="600" fill="#1d1d1f" text-anchor="middle">射击之星（高位 · 看跌）</text>
+
+          <!-- ===== 左侧：射击之星 ===== -->
+          <!-- 长上影 -->
+          <line x1="120" y1="70"  x2="120" y2="110" stroke="#e03131" stroke-width="4"/>
+          <!-- 实体 -->
+          <rect x="102" y="110" width="36" height="28" fill="#e03131" rx="3"/>
+          <!-- 短下影 -->
+          <line x1="120" y1="138" x2="120" y2="160" stroke="#e03131" stroke-width="4"/>
+
+          <!-- 高位水平线 -->
+          <line x1="120" y1="58" x2="230" y2="58" stroke="#c7c7cc" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <text x="238" y="62" font-size="11" fill="#86868b">高位出现</text>
+
+          <!-- 长上影标注 -->
+          <line x1="120" y1="76" x2="62" y2="76" stroke="#c7c7cc" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <text x="56" y="80" font-size="12" fill="#86868b" text-anchor="end">长上影线</text>
+
+          <!-- 上涨末端箭头 -->
+          <path d="M 88 250 Q 120 246 152 250" fill="none" stroke="#86868b" stroke-width="1.5" marker-end="url(#arr-shoot)"/>
+          <text x="120" y="272" font-size="12" fill="#86868b" text-anchor="middle">上涨末端出现 → 看跌信号</text>
+
+          <!-- 分隔 -->
+          <line x1="240" y1="60" x2="240" y2="270" stroke="#e5e5ea" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+          <!-- ===== 右侧：倒锤头 ===== -->
+          <text x="360" y="36" font-size="17" font-weight="600" fill="#1d1d1f" text-anchor="middle">倒锤头（低位 · 看涨）</text>
+
+          <line x1="360" y1="80"  x2="360" y2="120" stroke="#2f9e44" stroke-width="4"/>
+          <rect x="342" y="120" width="36" height="28" fill="#2f9e44" rx="3"/>
+          <line x1="360" y1="148" x2="360" y2="170" stroke="#2f9e44" stroke-width="4"/>
+
+          <!-- 低位水平线 -->
+          <line x1="360" y1="232" x2="465" y2="232" stroke="#c7c7cc" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <text x="240" y="228" font-size="11" fill="#86868b" text-anchor="end">低位出现</text>
+
+          <!-- 长上影标注 -->
+          <line x1="360" y1="86" x2="430" y2="86" stroke="#c7c7cc" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <text x="438" y="90" font-size="11" fill="#86868b">长上影线</text>
+
+          <!-- 下跌末端箭头 -->
+          <path d="M 328 250 Q 360 246 392 250" fill="none" stroke="#86868b" stroke-width="1.5" marker-end="url(#arr-shoot)"/>
+          <text x="360" y="272" font-size="12" fill="#86868b" text-anchor="middle">下跌末端出现 → 看涨信号</text>
+        </svg>
+        <p class="caption">点击放大 · 射击之星与倒锤头</p>
       </div>
+
+      <!-- 卡片 3：一字线 & T字线 -->
       <div class="learn-card">
         <h3>一字线 & T字线</h3>
         <p>极端价格形态。一字线表示多空力量极度一致；T字线显示开盘后一度被打压但最终收复。</p>
-        <img src="k-line-t.jpg" alt="一字线与T字线" class="zoomable" data-title="一字线与T字线">
+        <svg class="chart" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" data-title="一字线 &amp; T字线" role="img" aria-label="一字线与T字线示意图">
+          <defs>
+            <marker id="arr-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="#86868b"/>
+            </marker>
+          </defs>
+          <rect x="0" y="0" width="480" height="300" fill="#ffffff"/>
+          <text x="120" y="36" font-size="17" font-weight="600" fill="#1d1d1f" text-anchor="middle">一字线（开盘=收盘=最高=最低）</text>
+
+          <!-- ===== 左侧：一字线 ===== -->
+          <!-- 一字线：开盘价=收盘价=最高价=最低价，呈现为一根横线 -->
+          <line x1="102" y1="150" x2="138" y2="150" stroke="#e03131" stroke-width="5" stroke-linecap="round"/>
+          <!-- 上下微小凸起表示影线（实际为一字板：无影线） -->
+          <line x1="120" y1="150" x2="120" y2="146" stroke="#e03131" stroke-width="2"/>
+          <line x1="120" y1="150" x2="120" y2="154" stroke="#e03131" stroke-width="2"/>
+
+          <text x="120" y="120" font-size="12" fill="#86868b" text-anchor="middle">开 = 收 = 高 = 低</text>
+          <text x="120" y="190" font-size="12" fill="#86868b" text-anchor="middle">多空力量极度一致</text>
+
+          <!-- 涨跌停提示 -->
+          <rect x="58" y="214" width="124" height="26" rx="13" fill="#e03131" fill-opacity="0.1"/>
+          <text x="120" y="232" font-size="12" fill="#e03131" text-anchor="middle" font-weight="600">常见于涨停 / 跌停</text>
+
+          <!-- 分隔 -->
+          <line x1="240" y1="60" x2="240" y2="270" stroke="#e5e5ea" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+          <!-- ===== 右侧：T字线 ===== -->
+          <text x="360" y="36" font-size="17" font-weight="600" fill="#1d1d1f" text-anchor="middle">T字线（开盘=收盘=最高）</text>
+
+          <!-- T字线：开盘=收盘=最高价（上方横线），长下影被打压后收复 -->
+          <line x1="342" y1="110" x2="378" y2="110" stroke="#e03131" stroke-width="5" stroke-linecap="round"/>
+          <line x1="360" y1="110" x2="360" y2="240" stroke="#e03131" stroke-width="4"/>
+
+          <!-- 标注 -->
+          <line x1="330" y1="110" x2="300" y2="110" stroke="#c7c7cc" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <text x="292" y="114" font-size="12" fill="#86868b" text-anchor="end">开=收=高</text>
+
+          <line x1="360" y1="240" x2="430" y2="240" stroke="#c7c7cc" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <text x="438" y="244" font-size="11" fill="#86868b">长下影</text>
+
+          <text x="360" y="190" font-size="12" fill="#86868b" text-anchor="middle">盘中一度被打压</text>
+          <text x="360" y="270" font-size="12" fill="#86868b" text-anchor="middle">尾盘收复 → 下方有支撑</text>
+        </svg>
+        <p class="caption">点击放大 · 一字线与T字线</p>
       </div>
+
+    </div>
+
+    <h2 class="section-title later">K线组合 · 反转信号</h2>
+    <div class="learning-grid">
+
+      <!-- 卡片 4：红三兵 & 三只乌鸦 -->
+      <div class="learn-card">
+        <span class="badge">组合形态</span>
+        <h3>红三兵 &amp; 三只乌鸦</h3>
+        <p>连续三根同向K线。红三兵为递增阳线，强势看涨；三只乌鸦为递减阴线，强势看跌。</p>
+        <svg class="chart" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" data-title="红三兵 &amp; 三只乌鸦" role="img" aria-label="红三兵与三只乌鸦示意图">
+          <rect x="0" y="0" width="480" height="300" fill="#ffffff"/>
+          <text x="120" y="34" font-size="16" font-weight="600" fill="#1d1d1f" text-anchor="middle">红三兵（看涨）</text>
+          <!-- 三根递增阳线 -->
+          <line x1="75"  y1="185" x2="75"  y2="235" stroke="#e03131" stroke-width="1.5"/>
+          <rect x="64"  y="200" width="22" height="25" fill="#e03131" rx="2"/>
+          <line x1="120" y1="160" x2="120" y2="210" stroke="#e03131" stroke-width="1.5"/>
+          <rect x="109" y="175" width="22" height="25" fill="#e03131" rx="2"/>
+          <line x1="165" y1="135" x2="165" y2="185" stroke="#e03131" stroke-width="1.5"/>
+          <rect x="154" y="150" width="22" height="25" fill="#e03131" rx="2"/>
+          <path d="M 50 252 L 190 130" fill="none" stroke="#c7c7cc" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <text x="120" y="262" font-size="11" fill="#86868b" text-anchor="middle">3 根递增阳线 → 强势看涨</text>
+          <line x1="240" y1="55" x2="240" y2="275" stroke="#e5e5ea" stroke-width="1.5" stroke-dasharray="6 6"/>
+          <text x="360" y="34" font-size="16" font-weight="600" fill="#1d1d1f" text-anchor="middle">三只乌鸦（看跌）</text>
+          <!-- 三根递减阴线 -->
+          <line x1="315" y1="95"  x2="315" y2="145" stroke="#2f9e44" stroke-width="1.5"/>
+          <rect x="304" y="105" width="22" height="30" fill="#2f9e44" rx="2"/>
+          <line x1="360" y1="125" x2="360" y2="175" stroke="#2f9e44" stroke-width="1.5"/>
+          <rect x="349" y="135" width="22" height="30" fill="#2f9e44" rx="2"/>
+          <line x1="405" y1="155" x2="405" y2="205" stroke="#2f9e44" stroke-width="1.5"/>
+          <rect x="394" y="165" width="22" height="30" fill="#2f9e44" rx="2"/>
+          <path d="M 290 80 L 430 200" fill="none" stroke="#c7c7cc" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <text x="360" y="262" font-size="11" fill="#86868b" text-anchor="middle">3 根递减阴线 → 强势看跌</text>
+        </svg>
+        <p class="caption">点击放大 · 红三兵与三只乌鸦</p>
+      </div>
+
+      <!-- 卡片 5：看涨吞没 & 看跌吞没 -->
+      <div class="learn-card">
+        <span class="badge">组合形态</span>
+        <h3>看涨吞没 &amp; 看跌吞没</h3>
+        <p>第二根实体完全包住前一根。看涨吞没出现在底部，看跌吞没出现在顶部。</p>
+        <svg class="chart" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" data-title="看涨吞没 &amp; 看跌吞没" role="img" aria-label="看涨吞没与看跌吞没示意图">
+          <defs>
+            <marker id="arr-engulf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="#86868b"/>
+            </marker>
+          </defs>
+          <rect x="0" y="0" width="480" height="300" fill="#ffffff"/>
+          <text x="120" y="34" font-size="16" font-weight="600" fill="#1d1d1f" text-anchor="middle">看涨吞没（底部 · 看涨）</text>
+          <!-- A 小阴线 -->
+          <line x1="95" y1="150" x2="95" y2="195" stroke="#2f9e44" stroke-width="1.5"/>
+          <rect x="84" y="160" width="22" height="25" fill="#2f9e44" rx="2"/>
+          <!-- B 大阳线吞没 -->
+          <line x1="145" y1="125" x2="145" y2="215" stroke="#e03131" stroke-width="1.5"/>
+          <rect x="134" y="140" width="22" height="65" fill="#e03131" rx="2"/>
+          <path d="M 130 132 L 168 132 M 130 205 L 168 205" stroke="#86868b" stroke-width="1.2" stroke-dasharray="4 3" fill="none"/>
+          <text x="120" y="248" font-size="11" fill="#86868b" text-anchor="middle">阳线包住前阴线 → 看涨</text>
+          <path d="M 60 272 L 180 258" fill="none" stroke="#86868b" stroke-width="1.5" marker-end="url(#arr-engulf)"/>
+          <line x1="240" y1="55" x2="240" y2="275" stroke="#e5e5ea" stroke-width="1.5" stroke-dasharray="6 6"/>
+          <text x="360" y="34" font-size="16" font-weight="600" fill="#1d1d1f" text-anchor="middle">看跌吞没（顶部 · 看跌）</text>
+          <!-- A 小阳线 -->
+          <line x1="335" y1="110" x2="335" y2="155" stroke="#e03131" stroke-width="1.5"/>
+          <rect x="324" y="120" width="22" height="25" fill="#e03131" rx="2"/>
+          <!-- B 大阴线吞没 -->
+          <line x1="385" y1="95" x2="385" y2="175" stroke="#2f9e44" stroke-width="1.5"/>
+          <rect x="374" y="105" width="22" height="60" fill="#2f9e44" rx="2"/>
+          <path d="M 370 100 L 408 100 M 370 165 L 408 165" stroke="#86868b" stroke-width="1.2" stroke-dasharray="4 3" fill="none"/>
+          <text x="360" y="248" font-size="11" fill="#86868b" text-anchor="middle">阴线包住前阳线 → 看跌</text>
+          <path d="M 300 258 L 420 272" fill="none" stroke="#86868b" stroke-width="1.5" marker-end="url(#arr-engulf)"/>
+        </svg>
+        <p class="caption">点击放大 · 看涨吞没与看跌吞没</p>
+      </div>
+
+      <!-- 卡片 6：平头 & 平底 -->
+      <div class="learn-card">
+        <span class="badge">组合形态</span>
+        <h3>平头 &amp; 平底</h3>
+        <p>两根K线最高价或最低价相同。平头出现在顶部看跌，平底出现在底部看涨。</p>
+        <svg class="chart" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" data-title="平头 &amp; 平底" role="img" aria-label="平头与平底示意图">
+          <defs>
+            <marker id="arr-tweezer" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="#86868b"/>
+            </marker>
+          </defs>
+          <rect x="0" y="0" width="480" height="300" fill="#ffffff"/>
+          <text x="120" y="34" font-size="16" font-weight="600" fill="#1d1d1f" text-anchor="middle">平头（顶部 · 看跌）</text>
+          <line x1="50" y1="100" x2="210" y2="100" stroke="#e03131" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <text x="216" y="104" font-size="11" fill="#e03131" font-weight="600">同为最高价</text>
+          <line x1="100" y1="100" x2="100" y2="155" stroke="#e03131" stroke-width="1.5"/>
+          <rect x="89" y="110" width="22" height="30" fill="#e03131" rx="2"/>
+          <line x1="150" y1="100" x2="150" y2="150" stroke="#2f9e44" stroke-width="1.5"/>
+          <rect x="139" y="110" width="22" height="25" fill="#2f9e44" rx="2"/>
+          <text x="125" y="248" font-size="11" fill="#86868b" text-anchor="middle">两根同高 → 顶部反转</text>
+          <path d="M 60 272 L 195 258" fill="none" stroke="#86868b" stroke-width="1.5" marker-end="url(#arr-tweezer)"/>
+          <line x1="240" y1="55" x2="240" y2="275" stroke="#e5e5ea" stroke-width="1.5" stroke-dasharray="6 6"/>
+          <text x="360" y="34" font-size="16" font-weight="600" fill="#1d1d1f" text-anchor="middle">平底（底部 · 看涨）</text>
+          <line x1="270" y1="200" x2="460" y2="200" stroke="#2f9e44" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <text x="265" y="204" font-size="11" fill="#2f9e44" font-weight="600" text-anchor="end">同为最低价</text>
+          <line x1="320" y1="140" x2="320" y2="200" stroke="#2f9e44" stroke-width="1.5"/>
+          <rect x="309" y="150" width="22" height="30" fill="#2f9e44" rx="2"/>
+          <line x1="380" y1="145" x2="380" y2="200" stroke="#e03131" stroke-width="1.5"/>
+          <rect x="369" y="155" width="22" height="25" fill="#e03131" rx="2"/>
+          <text x="350" y="248" font-size="11" fill="#86868b" text-anchor="middle">两根同低 → 底部反转</text>
+          <path d="M 300 258 L 420 272" fill="none" stroke="#86868b" stroke-width="1.5" marker-end="url(#arr-tweezer)"/>
+        </svg>
+        <p class="caption">点击放大 · 平头与平底</p>
+      </div>
+
+      <!-- 卡片 7：启明星 & 黄昏星 -->
+      <div class="learn-card">
+        <span class="badge">组合形态</span>
+        <h3>启明星 &amp; 黄昏星</h3>
+        <p>三根K线组合。启明星为「阴 + 星 + 阳」，底部看涨；黄昏星为「阳 + 星 + 阴」，顶部看跌。</p>
+        <svg class="chart" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" data-title="启明星 &amp; 黄昏星" role="img" aria-label="启明星与黄昏星示意图">
+          <rect x="0" y="0" width="480" height="300" fill="#ffffff"/>
+          <text x="120" y="30" font-size="15" font-weight="600" fill="#1d1d1f" text-anchor="middle">启明星（底部 · 看涨）</text>
+          <!-- A 长阴 -->
+          <line x1="60" y1="95" x2="60" y2="195" stroke="#2f9e44" stroke-width="1.5"/>
+          <rect x="51" y="105" width="18" height="75" fill="#2f9e44" rx="2"/>
+          <!-- B 星（向下跳空） -->
+          <line x1="120" y1="198" x2="120" y2="222" stroke="#86868b" stroke-width="1.5"/>
+          <rect x="111" y="204" width="18" height="12" fill="#86868b" rx="2"/>
+          <text x="120" y="240" font-size="10" fill="#86868b" text-anchor="middle">星</text>
+          <!-- C 长阳 -->
+          <line x1="180" y1="140" x2="180" y2="195" stroke="#e03131" stroke-width="1.5"/>
+          <rect x="171" y="148" width="18" height="32" fill="#e03131" rx="2"/>
+          <text x="120" y="270" font-size="11" fill="#86868b" text-anchor="middle">阴 + 星 + 阳 → 看涨</text>
+          <line x1="240" y1="45" x2="240" y2="285" stroke="#e5e5ea" stroke-width="1.5" stroke-dasharray="6 6"/>
+          <text x="360" y="30" font-size="15" font-weight="600" fill="#1d1d1f" text-anchor="middle">黄昏星（顶部 · 看跌）</text>
+          <!-- A 长阳 -->
+          <line x1="300" y1="90" x2="300" y2="185" stroke="#e03131" stroke-width="1.5"/>
+          <rect x="291" y="100" width="18" height="70" fill="#e03131" rx="2"/>
+          <!-- B 星（向上跳空） -->
+          <line x1="360" y1="78" x2="360" y2="100" stroke="#86868b" stroke-width="1.5"/>
+          <rect x="351" y="84" width="18" height="12" fill="#86868b" rx="2"/>
+          <text x="360" y="74" font-size="10" fill="#86868b" text-anchor="middle">星</text>
+          <!-- C 长阴 -->
+          <line x1="420" y1="120" x2="420" y2="200" stroke="#2f9e44" stroke-width="1.5"/>
+          <rect x="411" y="128" width="18" height="32" fill="#2f9e44" rx="2"/>
+          <text x="360" y="270" font-size="11" fill="#86868b" text-anchor="middle">阳 + 星 + 阴 → 看跌</text>
+        </svg>
+        <p class="caption">点击放大 · 启明星与黄昏星</p>
+      </div>
+
+      <!-- 卡片 8：乌云盖顶 & 曙光初现 -->
+      <div class="learn-card">
+        <span class="badge">组合形态</span>
+        <h3>乌云盖顶 &amp; 曙光初现</h3>
+        <p>第二根开于前根极端、收于前根中点之外。乌云盖顶在顶部看跌，曙光初现在底部看涨。</p>
+        <svg class="chart" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" data-title="乌云盖顶 &amp; 曙光初现" role="img" aria-label="乌云盖顶与曙光初现示意图">
+          <defs>
+            <marker id="arr-cloud" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="#86868b"/>
+            </marker>
+          </defs>
+          <rect x="0" y="0" width="480" height="300" fill="#ffffff"/>
+          <text x="120" y="34" font-size="16" font-weight="600" fill="#1d1d1f" text-anchor="middle">乌云盖顶（顶部 · 看跌）</text>
+          <!-- A 阳线 -->
+          <line x1="95" y1="110" x2="95" y2="175" stroke="#e03131" stroke-width="1.5"/>
+          <rect x="84" y="120" width="22" height="40" fill="#e03131" rx="2"/>
+          <!-- A 中点线 -->
+          <line x1="60" y1="140" x2="200" y2="140" stroke="#c7c7cc" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="205" y="144" font-size="10" fill="#86868b">前根中点</text>
+          <!-- B 阴线：高开于A之上，收于A中点之下 -->
+          <line x1="150" y1="100" x2="150" y2="155" stroke="#2f9e44" stroke-width="1.5"/>
+          <rect x="139" y="105" width="22" height="40" fill="#2f9e44" rx="2"/>
+          <text x="120" y="248" font-size="11" fill="#86868b" text-anchor="middle">高开收于中点下 → 看跌</text>
+          <path d="M 60 272 L 180 258" fill="none" stroke="#86868b" stroke-width="1.5" marker-end="url(#arr-cloud)"/>
+          <line x1="240" y1="55" x2="240" y2="275" stroke="#e5e5ea" stroke-width="1.5" stroke-dasharray="6 6"/>
+          <text x="360" y="34" font-size="16" font-weight="600" fill="#1d1d1f" text-anchor="middle">曙光初现（底部 · 看涨）</text>
+          <!-- A 阴线 -->
+          <line x1="335" y1="120" x2="335" y2="190" stroke="#2f9e44" stroke-width="1.5"/>
+          <rect x="324" y="130" width="22" height="40" fill="#2f9e44" rx="2"/>
+          <!-- A 中点线 -->
+          <line x1="300" y1="150" x2="440" y2="150" stroke="#c7c7cc" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="296" y="154" font-size="10" fill="#86868b" text-anchor="end">前根中点</text>
+          <!-- B 阳线：低开于A之下，收于A中点之上 -->
+          <line x1="390" y1="125" x2="390" y2="195" stroke="#e03131" stroke-width="1.5"/>
+          <rect x="379" y="130" width="22" height="40" fill="#e03131" rx="2"/>
+          <text x="360" y="248" font-size="11" fill="#86868b" text-anchor="middle">低开收于中点上 → 看涨</text>
+          <path d="M 300 258 L 420 272" fill="none" stroke="#86868b" stroke-width="1.5" marker-end="url(#arr-cloud)"/>
+        </svg>
+        <p class="caption">点击放大 · 乌云盖顶与曙光初现</p>
+      </div>
+
     </div>
   </section>
 
+  <!-- 放大弹窗 -->
   <div class="image-modal" id="imageModal" aria-hidden="true">
     <button class="modal-close" type="button" aria-label="关闭放大图片">×</button>
-    <img id="modalImage" src="" alt="">
+    <div class="modal-body" id="modalBody">
+      <svg id="modalSvg" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="modal-title" id="modalTitle"></div>
+    </div>
   </div>
 
   <div class="back">
@@ -309,12 +713,25 @@
 
   <script>
     const modal = document.getElementById("imageModal");
-    const modalImage = document.getElementById("modalImage");
+    const modalSvg = document.getElementById("modalSvg");
+    const modalTitle = document.getElementById("modalTitle");
     const closeButton = modal.querySelector(".modal-close");
 
-    function openImageModal(image) {
-      modalImage.src = image.src;
-      modalImage.alt = image.dataset.title || image.alt || "放大图片";
+    // 放大：把原 SVG 的内部内容复制到弹窗 SVG 中，保持高清晰度
+    function openImageModal(svg) {
+      const clone = svg.cloneNode(true);
+      clone.removeAttribute("class");
+      clone.removeAttribute("data-title");
+      clone.setAttribute("viewBox", svg.viewBox.baseVal ? svg.viewBox.baseVal.x + " " + svg.viewBox.baseVal.y + " " + svg.viewBox.baseVal.width + " " + svg.viewBox.baseVal.height : "0 0 480 300");
+      // 清空后填充克隆内容
+      while (modalSvg.firstChild) {
+        modalSvg.removeChild(modalSvg.firstChild);
+      }
+      while (clone.firstChild) {
+        modalSvg.appendChild(clone.firstChild);
+      }
+      modalSvg.setAttribute("viewBox", clone.getAttribute("viewBox") || "0 0 480 300");
+      modalTitle.textContent = svg.dataset.title || svg.getAttribute("aria-label") || "K线形态";
       modal.classList.add("show");
       modal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
@@ -323,18 +740,28 @@
     function closeImageModal() {
       modal.classList.remove("show");
       modal.setAttribute("aria-hidden", "true");
-      modalImage.src = "";
+      while (modalSvg.firstChild) {
+        modalSvg.removeChild(modalSvg.firstChild);
+      }
       document.body.style.overflow = "";
     }
 
-    document.querySelectorAll(".zoomable").forEach((image) => {
-      image.addEventListener("click", () => openImageModal(image));
+    document.querySelectorAll("svg.chart").forEach((svg) => {
+      svg.addEventListener("click", () => openImageModal(svg));
+    });
+
+    // 说明文字也可点击放大
+    document.querySelectorAll(".learn-card .caption").forEach((caption) => {
+      caption.addEventListener("click", () => {
+        const svg = caption.previousElementSibling;
+        if (svg && svg.classList.contains("chart")) openImageModal(svg);
+      });
     });
 
     closeButton.addEventListener("click", closeImageModal);
 
     modal.addEventListener("click", (event) => {
-      if (event.target === modal || event.target === modalImage) {
+      if (event.target === modal) {
         closeImageModal();
       }
     });

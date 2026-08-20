@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lin · 个人主页</title>
+  <meta name="description" content="独立思考　明辨是非">
+  <meta property="og:title" content="Lin · 个人主页">
+  <meta property="og:description" content="独立思考　明辨是非">
+  <meta property="og:image" content="https://lin.loc.cc/avatar.jpg">
+  <meta property="og:url" content="https://lin.loc.cc">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <style>
+    /* ===== 基础设置（苹果风格核心：黑白灰 + 大留白 + 细腻字体） ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --blue: #0071e3;          /* 苹果蓝 */
+      --dark: #000000;          /* 深色背景 */
+      --dark-2: #161617;        /* 深色卡片 */
+      --text-dark: #1d1d1f;     /* 正文深灰 */
+      --text-gray: #6e6e73;     /* 次要文字灰 */
+      --bg-light: #f5f5f7;      /* 浅灰背景 */
+      --white: #ffffff;
+    }
+
+    html {
+      scroll-behavior: smooth;  /* 点击菜单平滑滚动 */
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+        "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    /* ===== 顶部导航 ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      color: var(--text-dark);
+    }
+
+    .nav-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;          /* 圆角正方形 */
+      object-fit: cover;            /* 保持比例裁剪 */
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-dark);
+    }
+
+    /* ===== 首屏（Hero）大标题区 ===== */
+    .hero {
+      background: linear-gradient(180deg, #000000 0%, #1d1d1f 100%);
+      color: var(--white);
+      text-align: center;
+      padding: 140px 20px 150px;
+    }
+
+    .hero .greeting {
+      font-size: 17px;
+      color: #86868b;
+      margin-bottom: 18px;
+      letter-spacing: 2px;
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 8vw, 72px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .hero h1 .light {
+      font-weight: 300;               /* 细字重的对比，苹果招牌手法 */
+      color: #d2d2d7;
+    }
+
+    .hero p {
+      font-size: clamp(17px, 3vw, 21px);
+      color: #a1a1a6;
+      max-width: 560px;
+      margin: 24px auto 40px;
+    }
+
+    .hero .reflection {
+      font-size: clamp(14px, 2.1vw, 17px);
+      color: #a1a1a6;
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 14px auto 28px;
+      letter-spacing: 0.3px;
+      font-weight: 300;
+    }
+
+    .hero .reflection .answer {
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    /* ===== Hero 入场动画（苹果/三星风格：向上滑入 + 淡入，依次出现） ===== */
+    @keyframes slideUpFade {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero .greeting,
+    .hero .reflection,
+    .hero h1,
+    .hero .btn {
+      animation: slideUpFade 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .hero .greeting   { animation-delay: 0.1s; }
+    .hero h1          { animation-delay: 0.3s; }
+    .hero .reflection { animation-delay: 0.5s; }
+    .hero .btn        { animation-delay: 0.7s; }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 32px;
+      border-radius: 980px;           /* 胶囊按钮 */
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-blue {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .btn-blue:hover {
+      background: #0077ed;
+      transform: scale(1.03);
+    }
+
+    .btn-ghost {
+      border: 1px solid #424245;
+      color: #f5f5f7;
+      margin-left: 14px;
+    }
+
+    .btn-ghost:hover {
+      border-color: #f5f5f7;
+    }
+
+    /* ===== 内容区块通用 ===== */
+    section {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 100px 20px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .section-sub {
+      font-size: 17px;
+      color: var(--text-gray);
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    /* ===== 三张卡片 ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--bg-light);
+      border-radius: 22px;           /* 大圆角 */
+      padding: 40px 28px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .card .icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 22px;
+    }
+
+    .card:nth-child(1) .icon { background: #e8f0fe; }
+    .card:nth-child(2) .icon { background: #fdf3e3; }
+    .card:nth-child(3) .icon { background: #e9f7ef; }
+
+    .card h3 {
+      font-size: 19px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--text-gray);
+    }
+
+    /* ===== 作品/大图区块 ===== */
+    .feature {
+      background: var(--bg-light);
+      border-radius: 24px;
+      padding: 60px 40px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .feature h3 {
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .feature p {
+      color: var(--text-gray);
+      max-width: 500px;
+      margin: 0 auto 26px;
+    }
+
+    .feature-link {
+      color: var(--blue);
+      font-size: 15px;
+      text-decoration: none;
+    }
+
+    .feature-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== 基金持仓分布（抖音风格环形图） ===== */
+    .holdings {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 16px 0 8px;
+    }
+
+    .donut {
+      position: relative;
+      width: 190px;
+      height: 190px;
+      flex-shrink: 0;
+    }
+
+    .donut svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .donut-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .donut-pct {
+      font-size: 40px;
+      font-weight: 700;
+      color: #fa2d48;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .donut-pct span {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .donut-label {
+      margin-top: 6px;
+      font-size: 13px;
+      color: #86868b;
+    }
+
+    .legend {
+      list-style: none;
+      min-width: 240px;
+    }
+
+    .legend li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: #f5f5f7;
+      border-radius: 16px;
+    }
+
+    .legend .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-info {
+      flex: 1;
+    }
+
+    .legend-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1d1d1f;
+    }
+
+    .legend-code {
+      font-size: 13px;
+      color: #86868b;
+      margin-top: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .legend-pct {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fa2d48;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .holdings-note {
+      margin-top: 18px;
+      font-size: 12px;
+      color: #a1a1a6;
+      text-align: center;
+    }
+
+    /* ===== 音乐歌品区块（酷狗风格） ===== */
+    .music-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .music-top {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 22px 24px;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .music-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #e94560, #f7c04a);
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 6px 20px rgba(233, 69, 96, 0.35);
+      overflow: hidden;
+    }
+
+    .music-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .music-id {
+      flex: 1;
+      color: #fff;
+    }
+
+    .music-id .name {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .music-id .badges {
+      margin-top: 6px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .badge.level {
+      background: linear-gradient(135deg, #f7c04a, #e94560);
+      font-weight: 600;
+    }
+
+    .music-stat {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .music-stat .cell {
+      background: #f5f5f7;
+      border-radius: 16px;
+      padding: 16px 12px;
+      text-align: center;
+    }
+
+    .music-stat .num {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1d1d1f;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .music-stat .num small {
+      font-size: 12px;
+      font-weight: 500;
+      color: #86868b;
+      margin-left: 2px;
+    }
+
+    .music-stat .lab {
+      margin-top: 4px;
+      font-size: 12px;
+      color: #86868b;
+    }
+
+    .music-rank {
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 20px;
+      padding: 18px 20px;
+    }
+
+    .music-rank .rank-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1d1d1f;
+      margin-bottom: 12px;
+    }
+
+    .rank-list {
+      list-style: none;
+    }
+
+    .rank-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 4px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .rank-list li:last-child {
+      border-bottom: none;
+    }
+
+    .rank-no {
+      width: 24px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #c7c7cc;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .rank-no.top {
+      color: #fa2d48;
+    }
+
+    .rank-song {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .rank-song .song {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1d1d1f;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .rank-song .singer {
+      font-size: 12px;
+      color: #86868b;
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .rank-count {
+      font-size: 13px;
+      font-weight: 600;
+      color: #86868b;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .music-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 14px;
+      color: var(--blue);
+      font-size: 14px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .music-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== 页脚 ===== */
+    footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 50px 20px 60px;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 12px;
+      color: var(--text-gray);
+      line-height: 1.8;
+    }
+
+    footer .brand {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    /* ===== 响应式：手机适配 ===== */
+    @media (max-width: 768px) {
+      .nav-links { gap: 16px; }
+      .cards { grid-template-columns: 1fr; }
+      .hero { padding: 100px 20px 110px; }
+      section { padding: 70px 20px; }
+      .btn-ghost { margin-left: 0; margin-top: 12px; display: inline-block; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 顶部导航：想改菜单文字就改这里 -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#">
+      <img class="nav-avatar" src="avatar.jpg" alt="Lin">
+      <span>Lin</span>
+    </a>
+      <ul class="nav-links">
+        <li><a href="about.html">关于</a></li>
+        <li><a href="#works">作品</a></li>
+        <li><a href="#music">音乐</a></li>
+        <li><a href="#contact">联系</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 首屏大标题 -->
+  <header class="hero">
+    <div class="greeting">你好，欢迎来到我的主页</div>
+    <h1><span class="light">我是</span> Lin</h1>
+    <div class="reflection">
+      “做一棵独立的树<br>
+      而不是攀附在树上的藤”
+    </div>
+    <a class="btn btn-blue" href="about.html">了解更多</a>
+    <a class="btn btn-ghost" href="#works">看看作品</a>
+  </header>
+
+  <!-- 关于 -->
+  <section id="about">
+    <h2 class="section-title"><a href="about.html" style="color:inherit;text-decoration:none">关于我 →</a></h2>
+    <p class="section-sub">简单、专注，把每一件小事做到极致。</p>
+    <div class="cards">
+<!-- 修改后的「一直在学习」卡片 -->
+      <a href="K.html" class="card" style="text-decoration:none">
+        <div class="icon">🌱</div>
+        <h3>一直在学习</h3>
+        <p>技术分析 · K线形态</p>
+      </a>
+      <div class="card">
+        <div class="icon">💡</div>
+        <h3>热爱创造</h3>
+        <p>喜欢把想法变成现实，无论是网站还是小工具。</p>
+      </div>
+      <div class="card">
+        <div class="icon">🤝</div>
+        <h3>乐于分享</h3>
+        <p>相信好东西值得被更多人看见，欢迎交流。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 作品 -->
+  <section id="works">
+    <h2 class="section-title">我的作品</h2>
+    <p class="section-sub">最近在做的一些事情。</p>
+    <div class="feature">
+      <h3>我的基金持仓分布</h3>
+      <div class="holdings">
+        <div class="donut">
+          <svg viewBox="0 0 200 200">
+            <defs>
+              <linearGradient id="gradA500" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff7a59"/>
+                <stop offset="100%" stop-color="#fa2d48"/>
+              </linearGradient>
+            </defs>
+            <circle cx="100" cy="100" r="80" fill="none" stroke="#f5f5f7" stroke-width="26"/>
+            <circle cx="100" cy="100" r="80" fill="none" stroke="url(#gradA500)" stroke-width="26"
+                    stroke-dasharray="502.65 0" transform="rotate(-90 100 100)"/>
+          </svg>
+          <div class="donut-center">
+            <div class="donut-pct">100<span>%</span></div>
+            <div class="donut-label">单一持仓</div>
+          </div>
+        </div>
+        <ul class="legend">
+          <li>
+            <span class="dot" style="background: linear-gradient(135deg, #ff7a59, #fa2d48);"></span>
+            <div class="legend-info">
+              <div class="legend-name">中证A500</div>
+              <div class="legend-code">000510</div>
+            </div>
+            <div class="legend-pct">100%</div>
+          </li>
+        </ul>
+      </div>
+      <p class="holdings-note">* 持仓仅为个人投资记录，不构成任何投资建议。</p>
+    </div>
+
+    <div class="feature">
+      <h3>独立本地AI基准测试</h3>
+      <p>面向本地部署大模型的独立评测。</p>
+      <a class="feature-link" href="https://local.ai/linyuji" target="_blank">访问 local.ai/linyuji →</a>
+    </div>
+  </section>
+
+  <!-- 音乐歌品 -->
+  <section id="music">
+    <h2 class="section-title">我的音乐歌品</h2>
+    <p class="section-sub">最近在听什么。</p>
+    <div class="music-wrap">
+      <div class="music-top">
+        <div class="music-avatar"><img src="music-avatar.jpg" alt="淋雨季"></div>
+        <div class="music-id">
+          <div class="name">淋雨季</div>
+          <div class="badges">
+            <span class="badge level">SVIP</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="music-stat">
+        <div class="cell">
+          <div class="num">338.6k<small>分钟</small></div>
+          <div class="lab">累计听歌</div>
+        </div>
+        <div class="cell">
+          <div class="num">22,593</div>
+          <div class="lab">累计歌曲</div>
+        </div>
+      </div>
+
+      <div class="music-rank">
+        <div class="rank-title">2025 年度听歌排行</div>
+        <ul class="rank-list">
+          <li><span class="rank-no top">1</span><div class="rank-song"><div class="song">千千阙歌</div><div class="singer">陈慧娴</div></div><span class="rank-count">484 次</span></li>
+          <li><span class="rank-no top">2</span><div class="rank-song"><div class="song">可我只是海</div><div class="singer">LBI利比</div></div><span class="rank-count">304 次</span></li>
+          <li><span class="rank-no top">3</span><div class="rank-song"><div class="song">富士山下</div><div class="singer">陈奕迅</div></div><span class="rank-count">221 次</span></li>
+          <li><span class="rank-no">4</span><div class="rank-song"><div class="song">至少还有你</div><div class="singer">林忆莲</div></div><span class="rank-count">207 次</span></li>
+          <li><span class="rank-no">5</span><div class="rank-song"><div class="song">推开世界的门</div><div class="singer">杨乃文</div></div><span class="rank-count">135 次</span></li>
+        </ul>
+        <a class="music-link" href="https://activity.kugou.com/share/v-c7b4da67/index.html?id=1f0f5ee9f0fa4833f30611ae388f241c" target="_blank">查看我的酷狗主页 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系 -->
+  <section id="contact">
+    <h2 class="section-title">联系我</h2>
+    <p class="section-sub">想认识我，或者有什么想聊的？欢迎随时联系。</p>
+    <div class="feature">
+      <p>🐧 QQ号：2239391435</p>
+      <p>💬 微信号：handsome6i6</p>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="brand">Lin</div>
+    <p>© 2026 Lin · 保留所有权利</p>
+    <p>Powered by GitHub Pages</p>
+  </footer>
+
+</body>
+</html>
